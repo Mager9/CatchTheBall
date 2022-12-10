@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      var ball = document.createElement('div');
+      ball.style.width = '50px';
+      ball.style.height = '50px';
+      ball.style.backgroundColor = 'red';
+      ball.style.borderRadius = '50%';
+      ball.style.position = 'absolute';
+      ball.style.top = '0px';
+      ball.style.left = '0px';
+      document.body.appendChild(ball);
+
+      var x = 0;
+      var y = 0;
+      var xDirection = 1;
+      var yDirection = 1;
+      var xSpeed = 4;
+      var ySpeed = 4;
+
+      function moveBall() {
+        x += xDirection * xSpeed;
+        y += yDirection * ySpeed;
+        ball.style.left = x + 'px';
+        ball.style.top = y + 'px';
+        if (x > window.innerWidth - 50) {
+          xDirection = -1;
+        }
+        if (x < 0) {
+          xDirection = 1;
+        }
+        if (y > window.innerHeight - 50) {
+          yDirection = -1;
+        }
+        if (y < 0) {
+          yDirection = 1;
+        }
+      }
+
+      setInterval(moveBall, 10);
+
+      ball.addEventListener('mouseover', function () {
+        document.body.style.backgroundColor = 'rgb(' + Math.random() * 255 + ',' + Math.random() * 255 + ',' + Math.random() * 255 + ')';
+      });
+
+      var score = 0;
+      var scoreDisplay = document.createElement('div');
+      scoreDisplay.innerHTML = 'Score: ' + score;
+      document.body.appendChild(scoreDisplay);
+
+      ball.addEventListener('mouseover', function () {
+        score += 1;
+        scoreDisplay.innerHTML = 'Score: ' + score;
+      });
+
+      if (window.innerWidth < 800) {
+        alert('Only playable in pc or laptop!');
+      }
+
+      var highScore = localStorage.getItem('highScore');
+      if (highScore === null) {
+        highScore = 0;
+      }
+      var highScoreDisplay = document.createElement('div');
+      highScoreDisplay.innerHTML = 'High Score: ' + highScore;
+      document.body.appendChild(highScoreDisplay);
+
+      ball.addEventListener('mouseover', function () {
+        if (score > highScore) {
+          highScore = score;
+          highScoreDisplay.innerHTML = 'High Score: ' + highScore;
+          localStorage.setItem('highScore', highScore);
+        }
+      });
+
+      ball.addEventListener('mouseover', function () {
+        xSpeed += 0.1;
+        ySpeed += 0.1;
+      });
+setInterval(function() {
+        document.title = "Catch The Ball - Score: " + score
+ }, 1000);
+    });
+  </script>
+</head>
+
+</html>
